@@ -4,15 +4,20 @@
 	<meta charset="UTF-8">
 	<title>移动首页</title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<!-- 这个css要放在全局的上面，方便全局去修改-->
+	<link rel="stylesheet" href={% static "css/swiper.min.css" %}>
 	<link rel="stylesheet" href={% static "css/rem.css" %}>
-</head>
-<body>
+
+	<script type="text/javascript" src={% static "js/jquery-1.12.4.min.js" %}></script>
+	<script type="text/javascript" src={% static "js/swiper.jquery.min.js" %} ></script>
 	<script>
+		// rem 的 js 
 		window.onload = function(){
 		    /*720代表设计师给的设计稿的宽度，你的设计稿是多少，就写多少;100代表换算比例，这里写100是
 		      为了以后好算,比如，你测量的一个宽度是100px,就可以写为1rem,以及1px=0.01rem等等*/
 	    	getRem(750,40)
 		};
+		//onresize 事件会在窗口或框架被调整大小时发生
 		window.onresize = function(){
 		    getRem(750,40)
 		};
@@ -22,9 +27,34 @@
 		    html.style.fontSize = oWidth/pwidth*prem + "px";
 		}
 	</script>
+	<script type="text/javascript">
+		//  swiper 幻灯片效果
+		$(function(){
+			// 实例化一个对象，
+			var swiper = new Swiper('.swiper-container', {
+				// 小圆点
+			    pagination: '.swiper-pagination',
+			    // 向上按钮
+			  	prevButton: '.swiper-button-prev',
+			  	// 向下按钮
+			 	nextButton: '.swiper-button-next',
+			 	// 初始的幻灯片，0代表第一张
+			    initialSlide :0,
+			    // 小圆点可点击
+			  	paginationClickable: true,
+			  	// 首尾循环播放
+			  	loop: true,
+			  	// 自动播放时间3s
+			  	autoplay:3000,
+			  	// 用户操作后还自动播放， true是不播放
+			 	autoplayDisableOnInteraction:false
+			});
+		})
+	</script>
+
+</head>
+<body>
 	
-
-
 	<!-- 把整个屏幕分成三大块，放在一个框里，整个框的大小是屏幕宽高 -->
 	<div class="main_warp">
 
@@ -38,14 +68,22 @@
 		<!-- 内容 -->
 		<div class="center_con">
 
-			<ul class="slide">
-				<li><img src={% static "images/rem/slide.jpg" %} alt="滚动图片"></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
+			<div class="slide">
+				<!-- swiper的css代码-->
+				<!-- 直接把这段幻灯片的容器代码拷贝过来 -->
+				<div class="swiper-container">
+				  	<div class="swiper-wrapper">
+					  	<!-- 把图片放进来 -->
+					    <div class="swiper-slide"><a href="#"><img src={% static "images/rem/slide.jpg" %} alt="滚动图片"></a></div>
+					    <div class="swiper-slide"><a href="#"><img src={% static "images/rem/slide.jpg" %} alt="滚动图片"></a></div>
+					    <div class="swiper-slide"><a href="#"><img src={% static "images/rem/slide.jpg" %} alt="滚动图片"></a></div>
+				  	</div>
+				    <div class="swiper-pagination"></div>
+				    <div class="swiper-button-prev"></div>
+				    <div class="swiper-button-next"></div>
+				</div>
+
+			</div>
 			
 
 			<div class="menu clearfix">   <!-- 解决margin-top塌陷 -->
