@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CSStest</title>
+	<style type="text/css">
+	
+		*{
+			margin:0;
+			padding:0;
+		}
+
+		.header{height: 50px; background-color: #ffffef; margin:-8px;}
+		.content{height: 700px; }
+
+		/* 仿app应用的图标s */
+		.box_con{
+			height: 100px;
+			background-color: green;
+			margin: 0 auto;
+
+		}
+
+		.con{
+			width: 100px;
+			height: 100px;
+			background-color: rgba(255,221,85,0.5);
+			margin:20px auto 0;
+			position: relative ;		/* 相对定位 */
+			border-radius: 14px;		/* 圆角半径 */
+		}
+		.box {
+			width: 28px;
+			height: 28px;
+			color: white;
+			background-color: red;
+			text-align: center;
+			line-height: 28px;
+			position: absolute;			/* 绝对定位 */
+			left:86px;
+			top:-14px;
+			border-radius: 14px;	
+			/* 动画效果:过渡的属性，过渡时间，运动方式，动画延迟  (多个动画之间用逗号隔开 ,)*/
+			transition: width 2s ease , height 1s ease 1s ;
+		}
+
+		.box:hover{
+			width: 400px;
+			height: 400px;
+		}
+
+		/*  常用列表来制作菜单 */
+		.menu{
+			width: 694px;
+			height: 50px;
+			margin: 0 auto;			
+			/*background-color: gray;		*/
+			list-style: none;				/* 去掉li的圆点 */
+			padding:0;						/* 去掉li的padding */
+
+			position: absolute;				/*  用绝对定位，不能用固定定位不然就一直显示在顶部*/			
+			left:50%;						
+			top:0;
+			margin-left: -347px;
+		}
+		.menu li a{
+			width: 98px;						
+			height: 48px;											
+			border: 1px solid gold;			/* 边框大小 类型 颜色 */
+			font: normal 16px/50px 'Microsoft Yahei';		/* 字体设置：加粗 大小/行间距 字体 */
+			margin-left: -1px;				/* 边框合并 */
+			text-align:center;				
+			text-decoration:none;			
+			color:pink;						
+			float:left;						/* 左浮动 靠左对齐*/
+		}
+		.menu a:hover{						/* 伪类 */
+			background-color: #FFA500;		
+			color:#fff;						
+		}
+		
+		/* 弹窗 */
+		#pop{
+			display: none;		/* 通过ajax，改变display的值来达到关闭弹窗的效果 */
+		}
+		.popup{
+			width: 200px;
+			height: 150px;
+			background-color: darkturquoise;
+			text-align: center;
+			position: fixed;
+			bottom: 5px;
+			right: 5px;
+			z-index: 9999;
+		}
+		.mask{
+			width: 100%;
+			height: 100%;
+			background-color: #000;
+			opacity:0.5;				/* 透明度 */
+			position: fixed;
+			left: 0;
+			top:0;
+			z-index: 9998;
+		}
+
+		/* 雪碧图  把一些小的图片放在一张图上，用的时候去缓存调取*/
+		.page .list {
+			list-style:none;
+			width: 300px;
+			height: 305px;
+			margin: 20px;
+			padding:0;
+			display: inline-block;
+		}
+		.page .list li{
+			height: :60px;
+			border-bottom: 1px dotted #000;
+			line-height: 60px;
+			text-align: 50px;
+			text-indent: 50px;
+			background:url({% static "images/bg01.png" %}) no-repeat 0px 10px;
+		}
+		.page .list .icon02{
+			background-position: 0px -71px;
+		}
+		.page .list .icon03{
+			background-position: 0px -151px;
+		}
+		.page .list .icon04{
+			background-position: 0px -233px;
+		}
+		.page .list .icon05{
+			background-position: 0px -315px;
+		}
+
+		/* 翻页： 盒模型、内联元素 */
+		.page{
+			height: 330px;			/* 305+5+20 */
+			width: 960px;			
+		}
+		.page .pagenation{
+			width: 600px;
+			height: 40px;
+			display: inline-block;		/* 转化为内联块 */
+			list-style: none;
+			border: 1px solid #666;		
+			font-size: 0;
+			text-align: center;			/* 把li作为一个块，居中 */
+			padding:0;
+
+		}
+		.page .pagenation li{
+			display: inline-block;		/* 转化为内联块， 纵向排列装为行 */	
+			height: 26px;
+			font-size:12px;
+			margin:7px 5px 0;			 /* 通过margin设置 间距 */
+		}
+		.page .pagenation li a{
+			display: block;						/* 转化为块设边距，撑开a标签 */
+			height: 26px;
+			line-height: 26px;
+			padding:0 10px;							 /* 通过设左右的padding内间距来设置a标签 宽度 */ 
+			font:normal 12px/26px 'Microsoft Yahei';
+			text-decoration: none;
+			color:#000;
+			background-color: gold;
+		}
+		.page .pagenation li a:hover{
+			background-color: red;
+			color:white;
+		}
+
+		/*  transition 动画  */
+		.pic{
+			height: 300px;
+			padding: 0;
+			margin-top:20px;
+		}
+		
+		.pic_con{
+			height: 300px;
+			width: 200px;
+			position: relative;
+			float: left;
+			overflow: hidden;
+		}
+
+		.pic_info{
+			width: 180px;
+			height: 100px;
+			padding: 10px;
+			position: absolute;
+			left: 0;
+			top: 300px;
+			background-color: rgba(0,0,0,0.3);
+
+			transition: all 500ms ease ;
+		}
+		.pic_con:hover .pic_info{
+			top:180px;
+		}
+		
+	
+		/*  transform  变形 */
+		.pic_form{
+			width: 200px;
+			height: 200px;
+			border:2px solid #000;
+			background-color: gold;
+			margin-left: 50px;
+			float: left;
+			/* translate位移比定位做的位移性能高，建议使用这种位移 */
+			/*transform: translate(0px,0px);*/
+			transition: all 500ms ease;
+		}
+		.pic_form:hover{
+			/* 位移 */
+			transform: translate(30px,50px);
+		}
+		.pic_scale{
+			width: 100px;
+			height: 100px;
+			border:2px solid #000;
+			background-color: gold;
+			margin-left: 50px;
+			float: left;
+			transition: all 500ms ease;
+		}
+		.pic_scale:hover{
+			/* 缩放 */
+			transform: scale(1,2);
+		}
+		.pic_rotate{
+			width: 200px;
+			height: 200px;
+			border:2px solid #000;
+			background-color: gold;
+			margin-left: 50px;
+			float: left;
+			transition: all 500ms ease;
+		}
+		.pic_rotate:hover{
+			/* 旋转 */
+			transform: rotate(60deg);
+		}
+		.pic_rotateY{
+			width: 200px;
+			height: 200px;
+			border:2px solid #000;
+			background-color: gold;
+			margin-left: 50px;
+			float: left;
+			/* 不设置初始值容易出现bug */
+			transform: perspective(0px) rotateY(0deg);
+			/* 在3D空间内变形 */
+			transform-style: preserve-3d ;
+			/* 旋转的中心点  */
+			transform-origin: right center;
+			/* 动画属性 */
+			transition: all 500ms ease;
+		}
+		.pic_rotateY:hover{
+			/* Y轴旋转，需要设置景深，不然就是缩放 800px是效果最好的 */
+			transform: perspective(800px) rotateY(45deg);
+		}		
+		.pic_skew{
+			width: 200px;
+			height: 200px;
+			border:2px solid #000;
+			background-color: gold;
+			margin-left: 50px;
+			float: left;
+			transition: all 500ms ease;
+		}
+		.pic_skew:hover{
+			/* 斜切，倾斜 */
+			transform: skew(45deg,0deg);
+		}
+
+		/* 翻面 */
+		.trans{
+			width: 700px;
+			height: 272px;
+			margin: 20px auto 20px;
+			border: 2px solid gold;
+			position: relative;
+			transform-style: preserve-3d;
+		}
+		.trans_pic{
+			position: absolute;
+			left: 200px;
+			top: 0px;
+			transform: perspective(800px) rotateY(0deg);
+			transition: all 1s ease;
+			backface-visibility:hidden;
+		}
+		.trans_text{
+			width: 300px;
+			height: 272px;
+			font-size: 20px;
+			text-align: center;
+			line-height: 272px;
+			position: absolute;
+			left: 200px;
+			top: 0px;
+			transform: perspective(800px) rotateY(-180deg);
+			transition: all 1s ease;
+			backface-visibility:hidden;
+		}
+		.trans:hover .trans_pic{
+			transform: perspective(800px) rotateY(180deg);
+		}
+		.trans:hover .trans_text{
+			transform: perspective(800px) rotateY(0deg);
+		}
+
+		/* animation 动画 */
+		/* 定义动画 */
+		@keyframes ratation{
+			from{
+				transform: rotate(0deg)
+			}
+			to{
+				transform: rotate(360deg);
+			}
+		}
+		.anima{
+			width: 400px;
+			height: 400px;
+			margin: 50px auto 20px ;
+			
+			animation: ratation 2s ease infinite;
+		}
+
+		
+		/* 自定义加载动画 */
+		@keyframes  loading{
+			from {
+				transform: scale(1,1);
+			}
+			to {
+				transform: scale(1,0.5);
+			}
+		}
+
+		div[data-attr="loading"]{
+			width: 300px;
+			height: 158px;
+			margin: 50px auto 20px;
+			border: 1px solid gold;
+		
+		}
+		div[data-attr="loading"] div{
+			float: left;
+			width: 30px;
+			height: 100px;
+			margin:15px;
+			border-radius: 15px;
+
+			animation: loading 500ms ease infinite alternate;
+		}
+		div[data-attr="loading"] p{
+			text-align: center;
+		}
+
+		div[data-attr="loading"] div:first-child{			/* CSS3新选择器 */
+			background-color: red;
+		}
+		div[data-attr="loading"] div:nth-child(2){
+			background-color: gold;
+			animation-delay:100ms;
+		}
+		div[data-attr="loading"] div:nth-child(3){
+			background-color: pink;
+			animation-delay:200ms;
+		}
+		div[data-attr="loading"] div:nth-child(4){
+			background-color: lightgreen;
+			animation-delay:300ms;
+		}
+		div[data-attr="loading"] div:nth-child(5){				/* 如果用 last-child 不行 */
+			background-color: lightblue;
+			animation-delay:400ms;
+		}
+
+		/* 走步的动画 */
+		@keyframes walking{
+			from {
+				left: 0px;
+			}
+			to{
+				left: -960px;	/* 图片到底的位置，图片的总长 */
+			}
+		}
+		.walking{
+			width: 120px;
+			height: 180px;
+			border:1px solid #ddd;
+			margin-left: 20px;
+			overflow: hidden;
+			position: relative;
+		}	
+		.walking img{
+			position: absolute;
+			left:0px;
+			top:0px;
+
+			animation: walking 1s steps(8) infinite ;
+		}
+	
+		.clk{
+			height: 450px;
+			margin: 20px 0 0 20px ;
+
+		}
+
+		#div1{
+			width: 200px;
+			height: 100px;
+			margin: 20px auto;
+		}
+		
+		#div2{
+			width: 200px;
+			height: 100px;
+			background: yellow;
+			margin-left:20px;
+			margin-bottom: 20px;
+		}
+
+		/* 无缝滚动 */
+		.list_con{
+			
+			width:1000px;
+			height:200px;
+			border:1px solid #000;
+			margin:10px auto 0;
+			background-color:#f0f0f0;
+			position:relative;
+			overflow:hidden;
+		}
+
+		.list_con ul{
+			list-style:none;
+			width:2000px;
+			height:200px;
+			position:absolute;
+			left:0;
+			top:0;
+		}
+
+
+		.list_con li{
+			width:180px;
+			height:180px;
+			float:left;
+			margin:10px;
+		}
+
+		.btns_con{
+			width:1000px;
+			height:30px;
+			margin:50px auto 0;
+			position:relative;
+		}
+
+		.left,.right{
+			width:30px;
+			height:30px;
+			background-color:gold;
+			position:absolute;
+			left:-40px;
+			top:124px;
+			font-size:30px;
+			line-height:30px;
+			color:#000;
+			font-family: 'Arial';
+			text-align:center;
+			cursor:pointer;
+			border-radius:15px;
+			opacity:0.5;
+		}
+
+		.right{
+			left:1010px;			
+			top:124px;			
+		}
+
+
+		/* 时钟 */
+		#clock{
+			width: 500px;
+			height: 100px;
+			margin: 20px auto;
+			font-size: 20px;
+		}
+
+		/* 倒计时 */
+		#timer_num{
+			width: 500px;
+			height: 100px;
+			margin: 20px auto;
+			font-size: 20px;
+			color: pink;
+		}
+
+
+	</style>
+	<!-- 第三种、外部引入 -->
+	<script type="text/javascript" src={% static "js/a.js" %}></script>
+	<!-- 第二种、页面嵌入js -->
+	<script type="text/javascript">
+
+		window.onload = function(){
+			/*
+			document.getElementById('test').style.color = 'red';
+			document.getElementById('test').style.fontSize = "30px";
+			document.getElementById('test').style.padding = "20px";
+			*/
+			// 用变量简化代码
+			var oTest = document.getElementById('test');
+			var sStyle = oTest.style 	
+			sStyle.color = 'red';
+			sStyle.fontSize = "30px";
+			sStyle.padding = "20px";
+			oTest.innerHTML = "这里的样式是javascript操作的,并且加了a标签;<a href='http://www.dzfong.com'>竹风</a>";
+
+			// 执行函数
+			var oBtn = document.getElementById('btn');
+			// 将事件属性和一个函数关联，函数不能写小括号，写了会马上执行
+			oBtn.onclick = function(){
+				var oDiv = document.getElementById('func');
+				oDiv.style.color = "gold";
+				oDiv.style.fontSize = '30px'
+				oDiv.style.padding = "20px";
+			}
+
+			function fnChangeStyle(myid, mystyle, val){		// mystyle, val 是形参
+			    var oDiv = document.getElementById(myid);
+			    oDiv.style[mystyle] = val;				// 自定义的属性需要用[]
+			}
+
+			fnChangeStyle('div1','fontSize', '30px');			// 实参
+			fnChangeStyle('div1','backgroundColor', 'pink');
+			fnChangeStyle('div1','text-align', 'center');
+			fnChangeStyle('div1','lineHeight', '100px');
+
+
+			// 定时器--- 动画效果
+			var oDiv = document.getElementById('div2');
+			var iLeft = 0;
+			var iSpeed = 3;
+			var timer = setInterval(function(){
+				iLeft += iSpeed;
+				oDiv.style.marginLeft = iLeft + 'px';
+
+				if(iLeft>900){
+					iSpeed = -3;
+					// clearInterval(timer);	// 当margin-left的值 大于700px 时，动画停止
+				}
+				else if(iLeft<=0){				// 反复移动
+					iSpeed = 3;
+				}
+			}, 30);
+
+
+
+			
+			// 无缝滚动
+			
+			var oBtn1 = document.getElementById('btn01');
+			var oBtn2 = document.getElementById('btn02');
+			var oDiv2 = document.getElementById('slide');
+			// alert(oDiv2);										//[object HTMLDivElement]
+			var oUl2 = oDiv2.getElementsByTagName('ul')[0];			// 拿到 slide 下的 ul的列表
+			// alert(oUl2);											//[object HTMLUListElement]
+			// alert(oUl2.innerHTML);									// 5个 li 的内容
+			
+			oUl2.innerHTML = oUl2.innerHTML + oUl2.innerHTML;		// 拼接10个li  复制一份内容
+
+			var iLeft2 = 0;
+			var iSpeed2 = -2;
+			var iNowSpeed2 = 0;		
+			var timer2 = setInterval(moving, 30);
+
+			function moving(){
+				iLeft2 += iSpeed2;
+				if(iLeft2<-1000){						// 当第一屏向左全部过去时，强制拉回来
+					iLeft2 = 0;
+				}
+				else if(iLeft2>0){						// 当向右移动时， left向右大于0，瞬间将ul拉回到第二屏				
+					iLeft2 = -1000;
+				}
+				oUl2.style.left = iLeft2 + 'px';
+			}
+
+			// 点击向左按钮，触发函数
+			oBtn1.onclick = function(){					
+				iSpeed2 = -2;
+			}
+
+			// 点击向右按钮，触发函数
+			oBtn2.onclick = function(){	
+				iSpeed2 = 2;
+			}
+
+			// 当鼠标放上去的时候，停止滚动
+			oUl2.onmouseover = function(){
+				// 先把值保存起来
+				iNowSpeed2 = iSpeed2;	
+				iSpeed2 = 0;
+			}
+
+			// 当鼠标移出的时候，按原来的方向继续滚动
+			oUl2.onmouseout = function(){
+				iSpeed2 = iNowSpeed2;
+			}
+
+
+
+
+			// 时钟
+			// 
+			var oClock = document.getElementById('clock');
+
+			// 需要反复执行的， 封装在一个函数内
+			function timego(){
+				// 初始化时间类
+				var sNow = new Date();
+				// 获取年份
+				var iYear = sNow.getFullYear();
+				// 获取月份, 月份是从0到11, 0表示1月份
+				var iMonth = sNow.getMonth()+1;
+				// 获取日期
+				var iDate = sNow.getDate();
+				// 获取星期 从0到6 ，而且是阿拉伯数字
+				var iWeek = sNow.getDay();
+				// 获取小时
+				var iHour = sNow.getHours();
+				// 获取分钟
+				var iMinute = sNow.getMinutes();
+				// 获取秒钟
+				var iSecond = sNow.getSeconds();
+				// 这里面有函数调用函数
+				var sTr = '当前时间是：' + iYear + '年' + iMonth + '月' + iDate + '日' + '&nbsp;&nbsp; ' + fnToweek(iWeek) + ' &nbsp;&nbsp;' + fnTodou(iHour) + ':' + fnTodou(iMinute)+':'+fnTodou(iSecond);
+				 // 输出到前端
+				oClock.innerHTML = sTr;
+			}
+
+			//调用一次， 如果不调用，默认的会等待一秒钟，才会调用
+			timego();
+
+			// 一秒钟刷新一次
+			setInterval(timego,1000);	
+
+
+			// 定义函数把 星期的阿拉伯数字改成大写	
+			function fnToweek(n){
+				switch(n){
+					case 0:
+						return '星期日';
+						break;
+					case 1:
+						return '星期一';
+						break;
+					case 2:
+						return '星期二';
+						break;
+					case 3:
+						return '星期三';
+						break;
+					case 4:
+						return '星期四';
+						break;
+					case 5:
+						return '星期五';
+						break;
+					case 6:
+						return '星期六';
+						break;
+					default:
+						break;
+				}
+			}	
+
+			
+			// 把小时、分钟、秒钟 单数变双数
+			function fnTodou(n){
+				
+				if (n<10){
+					return '0'+ n;
+				}
+				else {
+					return n;
+				}
+			}
+
+
+			// 倒计时
+			var oTiemr = document.getElementById('timer_num');
+
+			// 实际开发中，需要读取后台的时间，服务器上的时间, 通过ajax来读取
+			var sNow = new Date();
+			// 未来的时间: 8月31日晚24点 = 9月1日0点
+			var sFuture = new Date(2019,7,31,24,0,0);
+			// 计算还有多少秒；sFuture - sNow是毫秒，先换成秒，把毫秒去掉
+			var sLeft = parseInt((sFuture-sNow)/1000);
+
+			function fnTimerNum(){
+				// 判断是否到期
+				if(sLeft>0){
+				// 换算成天	
+					var iDays = parseInt(sLeft/86400);
+					// 换算成小时
+					var iHours = parseInt((sLeft%86400)/3600);
+					// 换算成分钟
+					var iMinutes = parseInt(((sLeft%86400)%3600)/60);
+					// 换算成秒
+					var iSecond = parseInt(((sLeft%86400)%3600)%60);
+
+					var sTr = "距离9月1日还剩：" + iDays + '天' + fnTodou(iHours) +'小时'+ fnTodou(iMinutes) +'分钟'+ fnTodou(iSecond) +'秒';
+
+					oTiemr.innerHTML = sTr;
+
+					// 这个很重要，自动递减，如果不设置会没有动画效果；
+					--sLeft;
+				}
+				// 到期停止动画
+				else{
+					clearInterval(sTimer);
+					oTiemr.innerHTML = "时间到！"
+				}
+			}
+
+			fnTimerNum();
+			var sTimer = setInterval(fnTimerNum, 1000);
+
+
+
+
+
+			// 页面弹窗，一次
+			var oPop = document.getElementById('pop');
+			var sPop = setTimeout(function(){
+				oPop.style.display = 'block';
+			}, 5000);
+			
+			oPop.onmouseover = function(){
+				clearTimeout(sPop);
+				oPop.style.display = 'none';
+			}
+
+		}
+
+	</script>
+
+</head>
+<body>
+	<div class = "header"></div>
+	<div class = "content">
+		<ul class="menu">
+			<li><a href="#">首页</a></li>
+			<li><a href="#">公司简介</a></li>
+			<li><a href="#">解决方案</a></li>
+			<li><a href="#">公司新闻</a></li>
+			<li><a href="#">行业动态</a></li>
+			<li><a href="#">招贤纳才</a></li>
+			<li><a href="#">联系我们</a></li>
+		</ul>
+
+		<div class="box_con">
+			<div class="con">
+				<div class="box">5</div>
+			</div>
+		</div>
+
+		<div class="page">
+			<ul class="list">
+				<li class="icon01">美人鱼</li>
+				<li class="icon02">疯狂动物城</li>
+				<li class="icon03">魔 兽</li>
+				<li class="icon04">美国队长3：英雄内战</li>
+				<li class="icon05">湄公河行动</li>
+			</ul>
+			<ul class="pagenation">
+				<li><a href="#">&lt;上一页</a></li>
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">4</a></li>
+				<li><span>...</span></li>
+				<li><a href="#">15</a></li>
+				<li><a href="#">16</a></li>
+				<li><a href="#">17</a></li>
+				<li><a href="#">18</a></li>
+				<li><a href="#">19</a></li>
+				<li><a href="#">下一页&gt;</a></li>
+			</ul>
+		</div>
+
+		
+		<div class="pic">
+			<div class="pic_con">
+				<img src={% static "images/banner01.jpg" %} alt="">
+				<div class="pic_info">
+					<h3>文字说明标题</h3>
+					<p>文字说明文字说明文字说明文字说明文字说明</p>
+				</div>
+			</div>
+			<!-- transform 变形 -->
+			<div class="pic_form">位移</div>
+			<div class="pic_scale">缩放</div>
+			<div class="pic_rotate">旋转</div>
+			<div class="pic_skew">斜切</div>
+			<div class="pic_rotateY">Y轴旋转</div>			
+		</div>
+
+		<div class="trans">
+			<div class="trans_pic"><img src={% static "images/location_bg.jpg" %} alt="背景图片"></div>
+			<div class="trans_text">图片说明文档</div>
+		</div>
+		
+		<div class="anima">
+			<img src={% static "images/fengche.png" %} alt="风车">
+		</div>
+
+		<div data-attr="loading">
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<p>loading...</p>
+		</div>
+
+		<div class="walking">
+			<img src={% static "images/walking.png" %} alt="走步动画">
+		</div>
+
+		<!-- 第一种、行间事件js -->
+		<div class="clk">
+			<input type="button" name="" value="点击" onclick="alert('ok!')">
+			<div id="test">这里的样式是javascript操作的</div>
+			
+			<div id= "func">  这是一个DIV </div>
+		
+			<input id='btn' type="button" name="" value="改变DIV">
+
+			<div id="div1"> 箱子 </div>
+
+			<div id="div2"> 定时器做动画效果 </div>
+		</div>
+
+		<!-- 无缝滚动 -->
+		<div class="btns_con">
+			<div class="left" id="btn01">&lt;</div>
+			<div class="right" id="btn02">&gt;</div>
+		</div>
+		<div class="list_con" id="slide">
+			<ul>
+				<li><a href=""><img src={% static "images/goods/goods001.jpg" %} alt="商品图片"></a></li>
+				<li><a href=""><img src={% static "images/goods/goods002.jpg" %} alt="商品图片"></a></li>
+				<li><a href=""><img src={% static "images/goods/goods003.jpg" %} alt="商品图片"></a></li>
+				<li><a href=""><img src={% static "images/goods/goods004.jpg" %} alt="商品图片"></a></li>
+				<li><a href=""><img src={% static "images/goods/goods005.jpg" %} alt="商品图片"></a></li>
+			</ul>		
+		</div>
+	
+		<!-- 时钟  -->
+		<div id="clock"></div>
+
+		<!-- 倒计时 -->
+		<div id="timer_num"></div>
+
+		<div id="pop">
+			<div class="popup"> 文本弹框 </div>
+			<div class="mask"></div>
+		</div>
+
+	</div>
+</body>
+</html>

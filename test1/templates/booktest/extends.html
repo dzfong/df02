@@ -1,0 +1,57 @@
+{%extends 'booktest/base.html'%}
+
+<!-- 引入自己的CSS文件  -->
+{% block css %}
+	<link rel="stylesheet" href={% static "css/content.css" %}>
+{% endblock %}
+
+
+{%  block content %}
+<h1> 这是继承 </h1>
+
+	<!--  条件判断  -->
+	{% if age > 18 %}
+		<h2>你允许访问此网站</h2>
+	{% else %}
+		<h2>未到法定年龄</h2>
+	{% endif %}
+
+
+
+	<!-- for循环 -->
+	{% for i in books%}
+	<li>{{ i }}</li>
+	{% endfor %}
+
+	{% for k,v in turorial.items %}
+	<h3 style="display:inline">{{ k }}:{{ v }}</h3>
+	{% endfor %}
+
+	{% for i in liss %}
+		<h1>{{ i }}</h1>
+	{% empty %}
+		<h6>{{empty}}</h2>
+	{% endfor %}
+
+
+	<!-- 标签with as -->
+	{% with teacher.english.type as t%}
+		<h2>{{t}}</h2>
+	{% endwith %}
+
+
+
+	<!-- 过滤器 属性-->
+	<h1>{{ value|add:200 }}</h1>
+
+
+{%endblock%}
+
+
+{% block search %}
+	<h2>修改了母版定义</h2>
+	<!-- 时间属性 -->
+	{% now 'Y M d H:i:s' %}
+{% endblock %}
+
+

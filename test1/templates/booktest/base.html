@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title%}{% endblock %}</title>
+	<link rel="stylesheet" href={% static "css/style.css" %}>
+	<!--这里用来设置子页面自己的css-->
+	{% block css %}
+  	{% endblock %}
+</head>
+<body>
+
+	<!--  导入导航文件 -->
+	{% include 'booktest/nav.html' %}
+
+	<div class="content">
+	
+		<!-- 单行注释 -->
+		{#	a #}
+
+
+		{% block content %}
+		{% endblock %}
+			
+
+		{% block search %}
+		<!-- 内容查询 -->
+		<form action={% url 'news:search' %}>
+		<input type="text" name= 'query'>
+		</form>
+		{% endblock %}
+
+
+
+		<!-- 多行注释 -->
+		{% comment %}
+		a
+		b 
+		c
+		d
+		{% endcomment %}
+
+	</div>
+
+	<!--  导入页脚文件 -->
+	{% include 'booktest/footer.html' %}
+
+
+	<script src="/static/js/jquery-1.12.4.js"></script>
+   	<script src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<!--这里用来设置子页面自己的js-->
+	{% block js %}
+    {% endblock %}
+
+</body>
+</html>

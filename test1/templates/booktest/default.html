@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>首页布局</title>
+	<link rel="stylesheet"  href={% static "css/default.css" %}>
+</head>
+<body>
+	<!-- 页面顶部  -->
+	<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到天天生鲜!</div>
+
+			<div class="user_con fr">
+				<ul class="login_btns fl">
+					<li><a href="#">登录</a></li>
+					<li><span>|</span></li>
+					<li><a href="#">注册</a></li>
+				</ul>
+				
+				<div class="user_info fl">
+					欢迎您：<em>张山</em>	
+				</div>
+
+				<ul class="user_btns fl">
+					<li><span>|</span></li>
+					<li><a href="#">我的购物车</a></li>
+					<li><span>|</span></li>
+					<li><a href="#">我的订单</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<!-- logo 搜索框 购物车 -->
+	<div class="center_con">
+		{#	logo图片不能用背景，应该放在页面上用链接， 方便爬虫爬取 #}
+		<a href={% url 'news:default' %} class="logo fl"><img src={% static "images/logo.png" %} alt="天天生鲜网站logo"></a>
+
+		<div class="search_con fl">
+			<form action="">
+				<input type="text" name="" class="input_text fl" placeholder="搜索">
+				<input type="submit" name="" class="input_sub fl" value="搜索">
+			</form>
+		</div>
+
+		<div class="chart_con fr">
+			<a href="#" class="chart_link fl">我的购物车</a>
+			<div class="chart_num fl">5</div>
+		</div>	
+	</div>
+
+	<!-- 主菜单 -->
+	<div class="main_menu_con">
+		<div class="center_con02">
+			<h2>全部商品分类</h2>
+			<ul>
+				<li><a href="#">首页</a></li>
+				<li><a href="#">手机生鲜</a></li>
+				<li><a href="#">抽奖</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- 二级菜单、 幻灯片、 广告 -->
+	<div class="center_con03">
+		<ul class="sub_menu_con fl">
+				<li><a href="#">新鲜水果</a></li>
+				<li><a href="#" class="icon02">新鲜水果</a></li>
+				<li><a href="#" class="icon03">猪牛羊肉</a></li>
+				<li><a href="#" class="icon04">禽类蛋品</a></li>
+				<li><a href="#" class="icon05">新鲜蔬菜</a></li>
+				<li><a href="#" class="icon06">速冻食品</a></li>
+		</ul>
+
+		<div class="slide_con fl">
+			<ul class="slide">
+				<li><a href="#"><img src={% static "images/slide.jpg"  %} alt="幻灯片"></a></li>
+				<li><a href="#"><img src={% static "images/slide.jpg"  %} alt="幻灯片"></a></li>
+				<li><a href="#"><img src={% static "images/slide.jpg"  %} alt="幻灯片"></a></li>
+				<li><a href="#"><img src={% static "images/slide.jpg"  %} alt="幻灯片"></a></li>
+				<li><a href="#"><img src={% static "images/slide.jpg"  %} alt="幻灯片"></a></li>
+				<li><a href="#"><img src={% static "images/slide.jpg"  %} alt="幻灯片"></a></li>
+			</ul>
+
+			<div class="prev"></div>
+			<div class="next"></div>
+
+			<ul class="points">
+				<li class="active"></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+
+		<div class="advs fl">
+			<a href="#"><img src={% static "images/adv01.jpg" %} alt="广告图片"></a>
+			<a href="#"><img src={% static "images/adv02.jpg" %} alt="广告图片"></a>
+		</div>
+	</div>
+
+	<!-- 产品展示 -->
+	<div class="common_model">
+		<div class="common_title_con">
+			<h3>新鲜水果</h3>
+			<ul>
+				<li><a href="">加州提子</a></li>
+				<li><a href="">加州提子</a></li>
+				<li><a href="">加州提子</a></li>
+			</ul>
+			<a href="#">查看更多 &gt;</a>
+		</div>
+		<div class="goods_banner fl">
+			<img src="{% static "images/banner01.jpg" %}" alt="时令水果">
+		</div>
+		<ul class="goods_list fl">
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+		</ul>
+	</div>
+
+	<!-- 产品展示 -->
+	<div class="common_model">
+		<div class="common_title_con">
+			<h3>新鲜水果</h3>
+			<ul>
+				<li><a href="">加州提子</a></li>
+				<li><a href="">加州提子</a></li>
+				<li><a href="">加州提子</a></li>
+			</ul>
+			<a href="#">查看更多 &gt;</a>
+		</div>
+		<div class="goods_banner fl">
+			<img src="{% static "images/banner01.jpg" %}" alt="时令水果">
+		</div>
+		<ul class="goods_list fl">
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+		</ul>
+	</div>
+
+	<!-- 产品展示 -->
+	<div class="common_model">
+		<div class="common_title_con">
+			<h3>新鲜水果</h3>
+			<ul>
+				<li><a href="">加州提子</a></li>
+				<li><a href="">加州提子</a></li>
+				<li><a href="">加州提子</a></li>
+			</ul>
+			<a href="#">查看更多 &gt;</a>
+		</div>
+		<div class="goods_banner fl">
+			<img src="{% static "images/banner01.jpg" %}" alt="时令水果">
+		</div>
+		<ul class="goods_list fl">
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+		</ul>
+	</div>
+
+	<!-- 产品展示 -->
+	<div class="common_model">
+		<div class="common_title_con">
+			<h3>新鲜水果</h3>
+			<ul>
+				<li><a href="">加州提子</a></li>
+				<li><a href="">加州提子</a></li>
+				<li><a href="">加州提子</a></li>
+			</ul>
+			<a href="#">查看更多 &gt;</a>
+		</div>
+		<div class="goods_banner fl">
+			<img src="{% static "images/banner01.jpg" %}" alt="时令水果">
+		</div>
+		<ul class="goods_list fl">
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+		</ul>
+	</div>
+
+	<!-- 产品展示 -->
+	<div class="common_model">
+		<div class="common_title_con">
+			<h3>新鲜水果</h3>
+			<ul>
+				<li><a href="">加州提子</a></li>
+				<li><a href="">加州提子</a></li>
+				<li><a href="">加州提子</a></li>
+			</ul>
+			<a href="#">查看更多 &gt;</a>
+		</div>
+		<div class="goods_banner fl">
+			<img src="{% static "images/banner01.jpg" %}" alt="时令水果">
+		</div>
+		<ul class="goods_list fl">
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+		</ul>
+	</div>
+
+	<!-- 产品展示 -->
+	<div class="common_model">
+		<div class="common_title_con">
+			<h3>新鲜水果</h3>
+			<ul>
+				<li><a href="">加州提子</a></li>
+				<li><a href="">加州提子</a></li>
+				<li><a href="">加州提子</a></li>
+			</ul>
+			<a href="#">查看更多 &gt;</a>
+		</div>
+		<div class="goods_banner fl">
+			<img src="{% static "images/banner01.jpg" %}" alt="时令水果">
+		</div>
+		<ul class="goods_list fl">
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+			<li>
+				<h4>草莓</h4>
+				<a href="#"><img src="{% static "images/goods.jpg" %}" alt="草莓"></a>
+				<p class="price">￥ 38.00</p>
+			</li>
+		</ul>
+	</div>
+
+	<!--  页尾  -->
+	<div class="footer">
+		<div class="footer_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>
+		</div>
+		
+		<p>CopyRight  © 2016  杭州天天生鲜信息技术有限公司 All Rights Reserved</p>
+
+		<p>电话： 0571-88888888  	京ICP备*******号</p>
+
+	</div>	
+
+</body>
+</html>

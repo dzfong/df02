@@ -1,0 +1,153 @@
+<!-- 加载自定义过滤器 -->
+{%load filters%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>模板文件</title>
+	<style>
+		.header{height: 50px; background-color: darkturquoise; margin:-8px;}
+		.content{height: 700px; }
+		.footer{height: 50px; background-color: lightpink ;}
+		.red{background-color: red}
+		.yellow{background-color: yellow}
+		.green{background-color: green}
+
+		ul.f1{
+			width: 60px;
+			display: inline-block;
+		}
+
+		.menu{
+			width: 694px;
+			height: 50px;
+			margin: 50px auto 0;
+			/*background-color: gray;		*/
+			font-size: 0px;	
+			padding:0;						/* 去掉li的padding */
+		}
+		.menu a{
+			width: 98px;						
+			height: 48px;					/* 标签的高度， */			
+			font-size: 16px;					
+			border: 1px solid gold;			/* 边框大小 类型 颜色 */
+			font-style: 'Microsoft Yahei';
+			display: inline-block;			/* 内联元素转为内联块元素 */
+			margin-left: -1px;				/* 边框合并 */
+			text-align:center;				/* 文字水平居中 */
+			line-height:50px;				/* 文字的间距 设置文字垂直居中 */
+			text-decoration:none;			/* 去下划线 */
+			color:pink;						/* 字体颜色 */
+		}
+		.menu a:hover{						/* 伪类 */
+			background-color: #FFA500;		/* 鼠标滑过的背景颜色 */
+			color:#fff;						/* 字体颜色 */
+		}
+
+	
+
+		/*  常用列表来制作菜单 */
+
+
+		.menu1{
+			width: 694px;
+			height: 50px;
+			margin: 0 auto;			/* 整体布局 	*/
+			/*background-color: gray;		*/
+			list-style: none;				/* 去掉li的圆点 */
+			padding:0;						/* 去掉li的padding */
+
+			position: fixed;				
+			left:50%;
+			top:0;
+			margin-left: -347px;
+
+		}
+		.menu1 li a{
+			width: 98px;						
+			height: 48px;					/* 标签的高度， */							
+			border: 1px solid gold;			/* 边框大小 类型 颜色 */
+			font: normal 16px/50px 'Microsoft Yahei';		/* 字体设置：加粗 大小/行间距 字体 */
+			margin-left: -1px;				/* 边框合并 */
+			text-align:center;				/* 文字水平居中 */
+			text-decoration:none;			/* 去下划线 */
+			color:pink;						/* 字体颜色 */
+			float:left;						/* 左浮动 */
+		}
+		.menu1 a:hover{						/* 伪类 */
+			background-color: #FFA500;		/* 鼠标滑过的背景颜色 */
+			color:#fff;						/* 字体颜色 */
+		}
+
+
+
+	</style>
+</head>
+<body>
+	<div class = "header"> 导航栏 </div>
+	<div class = "content">
+		<h1> 这是一个模板文件 </h1>
+		使用模板变量： <br/>
+		{{ content }} <br/>
+		使用列表：<br/>
+		{{ list }} <br>
+		for 循环：<br>
+		<ul class="f1">
+			{% for i in list %}
+			
+			<!-- 多行注释  -->
+			{% comment %}
+				{% if i <= 2 %}
+					<li class="red">{{ forloop.counter }}--{{ i }}</li>
+				{% elif i <= 5 %}
+					<li class="yellow">{{ forloop.counter }}--{{ i }}</li>
+				{% else %}
+					<li class="green">{{ forloop.counter }}--{{ i }}</li>
+				{% endif %}
+			{% endcomment %}
+
+				<!-- 自定义过滤器  -->
+				{% if i|mm %}
+					<li class="red">{{ forloop.counter }}--{{ i }}</li>
+				{% else %}
+					<li class="green">{{ forloop.counter }}--{{ i }}</li>
+				{% endif %}
+
+			{% endfor %}
+		</ul>
+
+		<!-- 内容查询 -->
+		<form action={% url 'booktest:search' %}>
+			<input type="text" name= 'query'>
+		</form>
+
+
+
+		<a href="{% url 'news:loose' a=100 b=200 %}" >  路径页 </a>
+
+
+		<div class="menu">
+			<a href="#">首页</a>
+			<a href="#">公司简介</a>
+			<a href="#">解决方案</a>
+			<a href="#">公司新闻</a>
+			<a href="#">行业动态</a>
+			<a href="#">招贤纳才</a>
+			<a href="#">联系我们</a>	
+		</div>
+	
+		<ul class="menu1">
+			<li><a href="#">首页</a></li>
+			<li><a href="#">公司简介</a></li>
+			<li><a href="#">解决方案</a></li>
+			<li><a href="#">公司新闻</a></li>
+			<li><a href="#">行业动态</a></li>
+			<li><a href="#">招贤纳才</a></li>
+			<li><a href="#">联系我们</a></li>
+		</ul>
+
+	</div>	
+	<div class='footer'> 页脚 </div>
+
+</body>
+</html>

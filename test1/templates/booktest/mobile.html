@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>移动端布局</title>
+	<!-- 视口的设置  宽度等于设备的宽度，不允许用户缩放，初始放缩、最大最小放缩都是1.0(做兼容)-->
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<style>
+		body{
+			margin: 0;
+		}
+		/* 流体布局 */
+		.con a{
+			display: black;
+			float: left;
+			/* 可以用这个设置宽度，有可以设盒子的大小,*/
+			/*width: calc(25% - 4px);*/
+			width: 25%;
+			height: 100px;
+			background-color: gold;
+			text-align: center;
+			line-height: 100px;
+			text-decoration: none;
+			color: #333;
+			font-size:14px;
+			border:2px solid #000;
+			/* 设置盒子的大小 */
+			box-sizing: border-box;
+		}
+
+
+		/* 响应式布局 */
+		.con1 a{
+			width: 23%;
+			height: 200px;
+			border: 2px solid #000;
+			background-color: gold;
+			margin: 1%;
+			float:left;
+			box-sizing: border-box;
+			text-align: center;
+			line-height: 200px;
+			text-decoration: none;
+			color: #333;
+			font-size:14px;
+		}
+
+		@media (max-width: 800px) {
+			.con1 a{
+				width: 46%;
+				margin: 2%;
+			}	
+		}
+
+		@media (max-width: 400px) {
+			.con1 a{
+				width: 94%;
+				margin: 3%;
+			}
+		}	
+
+		
+
+	</style>
+</head>
+<body>
+	<!-- 流体布局 -->
+	<div class="con">
+		<a href="#">菜单一</a>
+		<a href="#">菜单二</a>
+		<a href="#">菜单三</a>
+		<a href="#">菜单四</a>
+	</div>
+
+	<!-- 响应式布局 -->
+	<div class="con1">
+		<a href="#">菜单一</a>
+		<a href="#">菜单二</a>
+		<a href="#">菜单三</a>
+		<a href="#">菜单四</a>
+	</div>
+</body>
+</html>

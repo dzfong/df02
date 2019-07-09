@@ -1,0 +1,498 @@
+/* 去默认样式 */
+body,p,h1,h2,h3,h4,h5,h6,ul,dl,dt,form,input{ 
+		margin:0;
+		padding:0; 	 	/* 去间距 */
+		font-family: "Microsoft Yahei";
+		font-size:14px;
+}	
+
+ul{ 
+	list-style: none;		/* 去掉默认的小圆点 */
+}
+
+a{ 
+	text-decoration:none; 	/* 去掉默认的下划线 */
+}	
+
+em{ 
+	font-style:normal; 		/* 设置不倾斜 */
+}	
+
+img{ 
+	border:0 ;	 			/* 去掉在IE下图片做链接时会默认生成1px的边框 */
+}	
+
+h1,h2,h3,h4,h5,h6{ 
+	font-size:100% ;		/* 让h标签继承body中的字体大小的设置 */
+}	
+
+/* 公共的类 */
+.clearfix:before,.clearfix:after{ 	/* 清除浮动、解决margin-top 塌陷 */
+	content:""; 
+	display:table; 
+}
+.clearfix:after{ 
+	clear:both; 
+}		
+.clearfix{			/*  IE兼容 */
+ 	zoom:1 
+ }	
+
+.fl{
+ 	float:left 		/* 左浮动 */
+ }			
+.fr{ 
+	float:right 	/* 右浮动 */
+}			
+
+
+
+/*  顶部页面的样式 */
+.header_con {		/* 页面顶部的样式 */
+	height: 29px;
+	background-color: #f7f7f7;
+	border-bottom: 1px solid #ddd;
+}
+
+.header {
+	width: 1200px;
+	height: 29px;
+	margin: 0 auto;
+}
+
+.welcome{
+	font-size: 12px;
+	color: #666;
+	line-height: 29px;
+}
+
+.user_con{
+	/*background-color: gold;*/
+}
+
+.user_info{
+	display: none;
+	font-size: 12px;
+	line-height: 29px;
+	color:#666;
+}
+.user_info em{
+	color: #f80;
+}
+
+
+.login_btns{
+	/*display: none;*/
+}
+
+.login_btns li,.user_btns li{
+	float:left;
+	height: 29px;
+}
+
+.login_btns a,.user_btns a{
+	display: block;
+	line-height: 29px;
+	font-size: 12px;
+	color: #666;
+}
+
+.login_btns span,.user_btns span{
+	line-height: 29px;
+	font-size: 12px;
+	padding:0 10px;
+	color: #cecece;
+}
+
+.login_btns a:hover,.user_btns a:hover{
+	color: #f80;
+}
+
+
+
+
+/* logo , 搜索页面 (logo 靠左， 购物车靠右)*/
+.center_con{
+	width: 1200px;
+	height: 115px;
+	margin:0 auto;
+}
+
+.logo{
+	margin:29px 0 0 17px;
+}
+
+
+.search_con {
+	width: 616px;
+	height: 38px;
+	margin:34px 0 0  124px;
+	border: 1px solid #37ab40;
+	/* 相对于CSS的路径 ./当前目录 ../上层目录  ../../上上层目录  */
+	background: url(../images/icons.png) no-repeat 10px 10px;
+}
+
+.search_con .input_text{
+	height: 38px;
+	width: 481px;
+	margin-left: 35px;
+	border:0;	
+	/* 去掉获得焦点时显示的蓝色的框 */
+	outline: none;			
+}
+
+/* 设置placeholder的样式，CSS3的属性 */
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #666;
+    padding: 30px;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #666;
+   padding: 30px;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #666;
+   padding: 30px;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #666;
+   padding: 30px;
+}
+
+.search_con .input_sub{
+	width: 100px;
+	height: 38px;
+	background-color: #37ab40;
+	border: 0;
+	font-size:14px;
+	color: white;
+	/* 将鼠标的形状改为手型 */
+	cursor:pointer;
+}
+
+
+.chart_con{
+	width:200px;
+	height: 40px;
+	margin-top:34px;
+}
+
+.chart_con .chart_link{
+	width: 158px;
+	height: 38px;
+	border: 1px solid #ddd;
+	background: url(../images/icons.png) 12px -42px no-repeat #f7f7f7;
+	text-indent: 56px;
+	line-height: 38px;
+	font-size: 14px;
+	color: #37ab40;
+}
+
+.chart_con .chart_num{
+	width: 40px;
+	height: 40px;
+	background-color: #f80;
+	text-align: center;
+	line-height: 40px;
+	/* 当定义了全局，font这个属性就不起效果，必须一个个设置 */
+	/*font: blod 20px/40px 'Microsoft Yahei';*/
+	font-weight: bold;
+	font-size:18px;
+	color: #fff;
+}
+
+
+
+
+/*    主菜单     */
+.main_menu_con{
+	height: 40px;
+	border-bottom:2px solid #37ab40;	
+}
+
+.center_con02{
+	height: 40px;
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.center_con02 h2{
+	float: left;
+	width: 200px;
+	height: 40px;
+	background-color: #37ab40;
+	font-size: 14px;
+	text-align: center;
+	line-height: 40px;
+	color: white;
+}
+
+.center_con02 ul{
+	float: left;
+	overflow: hidden;
+}
+
+.center_con02 li{
+	float: left;
+	height: 40px;
+}
+
+.center_con02 a{
+	display: block;
+	height: 16px;
+	line-height: 16px;
+	margin-top:13px;
+	padding: 0 20px;
+	border-left: 1px solid #666;
+	color:#666;
+	/* 去掉最左边的那条线，父属性要设 hidden */
+	margin-left: -1px;
+}
+
+.center_con02 a:hover{
+	color:#f80;
+}
+
+
+
+/* 二级菜单、 幻灯片、 广告 */
+.center_con03{
+	width: 1200px;
+	height: 270px;
+	margin: 0 auto;
+
+}
+.sub_menu_con{
+	width: 200px;
+	height: 270px;
+}
+.sub_menu_con li{
+	width: 198px;
+	height: 44px;
+	border:1px solid #eee;
+	border-top:0px;
+	background:url(../images/icons.png) no-repeat 178px -384px ;
+}
+.sub_menu_con a{
+	/* 把a转换为块，可以都链接 */
+	display: block;		
+	line-height: 44px;
+	text-indent: 77px;
+	color:#333;
+	background:url(../images/icons.png) no-repeat 33px -90px ;
+}
+.sub_menu_con .icon02{
+	background-position: 30px -140px;
+}
+.sub_menu_con .icon03{
+	background-position: 30px -190px;
+}
+.sub_menu_con .icon04{
+	background-position: 33px -240px;
+}
+.sub_menu_con .icon05{
+	background-position: 31px -290px;
+}
+.sub_menu_con .icon06{
+	background-position: 32px -338px;
+}
+.sub_menu_con a:hover{
+	color: #f80;
+}
+
+.slide_con{
+	width: 760px;
+	height: 270px;
+	background-color: pink;
+	position: relative;
+	overflow: hidden;
+}
+.slide_con .slide{
+	position: absolute;
+	/* 760*6 */
+	width: 4560px;		
+	height: 270px;
+	/* 幻灯片就是改变left的值  */
+	left: 0px;
+	top: 0px;
+}
+.slide_con .slide li{
+	float:left;
+}
+
+.prev,.next{
+	position: absolute;
+	width: 15px;
+	height: 24px;
+	background: url(../images/icons.png) left -450px no-repeat;
+	left:0;
+	top:0;
+}
+
+.prev{
+	left:11px;
+	top:122px;
+	cursor: pointer;
+}
+.next{
+	background-position: left -500px;
+	top: 122px;
+	left: 732px ;
+}
+
+.points{
+	position: absolute;
+	/* 变成行内块元素，默认没有宽度，需要设置宽度，100%是继承父属性的 */
+	width: 100%;
+	height: 11px;
+	left: 0;
+	bottom: 9px;
+	font-size:0;
+	text-align: center;
+}
+.points li{
+	display: inline-block;
+	width: 11px;
+	height: 11px;
+	background-color: #9f9f9f;
+	margin: 0 5px;
+	/* 如果用低版本浏览器是不兼容的，还是方的 */
+	border-radius: 50%;
+	cursor:pointer;
+}
+.points .active{
+	background-color: #cecece ;
+}
+
+.advs{
+	width: 240px;
+	height: 270px;
+}
+/* 解决图片下3像素的bug */
+.advs img{
+	display: block;
+}
+
+
+
+
+/*    产品展示    */
+.common_model{
+	width: 1200px;
+	height: 337px;
+	margin: 20px auto 0;
+}
+
+.common_title_con{
+	width: 1200px;
+	height: 35px;
+	margin: 0 auto;
+	border-bottom: 2px solid #37ab40;
+}
+.common_title_con h3{
+	float: left;
+	font-size: 20px;
+	line-height: 35px;
+	color: #37ab40;
+}
+
+.common_title_con ul{
+	float:left;
+	height: 12px;
+	border-left: 1px solid #666;
+	margin: 12px 0 0 20px;
+}
+.common_title_con ul li{
+	float: left;
+	line-height: 12px;
+}
+.common_title_con ul li a{
+	line-height: 12px;
+	font-size:12px;
+	margin-left: 15px;
+	color: #666;
+}
+.common_title_con ul li a:hover{
+	color: #f80;
+}
+
+.common_title_con a{
+	float: right;
+	color: #666;
+}
+
+.common_title_con a:hover{
+	color: #f80;
+}
+
+.goods_banner{
+	width: 200px;
+	height: 300px;	
+}
+.goods_list{
+	width: 1000px;
+	height: 200px;
+}
+.goods_list li{
+	float: left;
+	width: 249px;
+	height: 299px;
+	border-right: 1px solid #ededed;
+	border-bottom: 1px solid #ededed;
+}
+
+.goods_list li h4{
+	height: 50px;
+	font: 14px;
+	font-weight: normal;
+	text-align: center;
+	line-height: 50px;
+	color: #666;
+}
+
+.goods_list li a{
+	display: block;
+	width: 180px;
+	height: 180px;
+	margin: 0 auto;
+}
+.goods_list li p{
+	font-weight: bold;
+	font-size: 20px;
+	line-height: 50px;
+	color: #c40000;
+	text-align: center;
+	margin-top: 20px;
+}
+
+
+
+
+/*     页尾      */
+.footer{
+	border-top: 2px solid #4ab14e;
+	margin: 30px 0 40px;
+}
+
+.footer_link{
+	text-align:  center;
+	margin-top: 38px;
+}
+
+.footer_link a ,.footer_link span{
+	color: #4e4e4e;
+	font-size: 12px;
+}
+.footer_link span{
+	margin:0 10px; 
+}
+.footer_link a:hover{
+	color:#f80;
+}
+.footer p {
+	text-align: center;
+	margin-top: 14px;
+	font-size: 12px;
+}

@@ -1,0 +1,23 @@
+.nav{height: 50px; background-color: darkturquoise}
+
+.nav li{
+	float: left;
+	margin-left: 10px;
+	line-height: 60px;
+	list-style: none;
+	color:#ffffff;
+	font-size: 28px
+}
+
+.content{height: 680px}
+
+.footer{height: 50px; background-color: lightpink}
+
+.footer li{
+	float: left;
+	margin-left: 10px;
+	line-height: 60px;
+	list-style: none;
+	color:#ffffff;
+	font-size: 28px
+}

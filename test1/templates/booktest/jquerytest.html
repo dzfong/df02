@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery测试</title>
+	<script type="text/javascript"  src={% static "js/jquery-1.12.4.min.js" %} ></script>
+	<!-- 滚轮js，基于jquery库的 -->
+	<script type="text/javascript"  src={% static "js/jquery.mousewheel.js" %} ></script>
+	<script type="text/javascript">
+
+			// ready的写法
+			// $(document).ready(function(){
+			// 	var $div = $('#div1');
+			// 	alert("jquery弹出的" + $div);	
+
+			// })
+
+			// 简写模式
+			$(function(){
+
+				var $div = $('.box');		// 定义个.box的对象
+
+				$div.css({width:'200px', height:'50px'});	// 改变样式
+
+				$div.addClass('big')	// 为 样式为.box的div追加个样式 .big	
+
+				$div.removeClass('red')	 // 去掉字体颜色的red 样式
+
+
+				// alert($div.length);		// 获取样式为.box的元素
+
+				$('div').eq(4).css({'text-indent':'20px'});		// 从0开始的，4代表的是第5个
+
+				$('div').eq(3).prev().css({color:'red'});		// 第4个div前面的那个 ，应该是 第3个
+
+
+
+
+				// 菜单悬顶
+				
+				// 滚动事件
+				$(window).scroll(function(){
+
+					// 滚动时 顶端隐藏起来的尺寸
+					var iNum = $(document).scrollTop();
+					// 判断隐藏尺寸大于 center_1 时，导航条绝对定位，左右距离
+					//  当菜单刚悬浮，下面的元素会瞬间跳过菜单，所以要加个和菜单此存一样div当悬浮的时候占用位置，
+					if (iNum >= $('.center_1').outerHeight()) {
+						$(".menu_top").css({'position':'fixed','top':0, 'left':($(document).width()-$('.center_1').width())/2,'z-index':9990});
+						$(".menu_bac").show();
+					}else {
+						// 没超过时，还是原来的属性值
+						$(".menu_bac").hide();
+						$(".menu_top").css({'position':'static'});
+					}
+
+					// 判断显示 返回到顶部的图标
+					if (iNum > $(document).height()/3){
+						$('.totop').fadeIn();
+					}else{						
+						$('.totop').fadeOut();					
+					}
+
+				});
+
+				// 点击返回顶部的按钮动作 （不能写在scroll() 函数中）
+				$('.totop').click(function(){
+					$('html,body').animate({'scrollTop':0})	
+				});
+
+
+
+
+				// 绑定click事件
+				$('#btn').css({'margin-top':'20px'}).click(function(){
+						// // 可以用 hasClass 来检测是否含有 col1的样式
+						// if ($('.box').hasClass('col1')){
+						// 	$('.box').removeClass('col1');		// 不能把 $('.box') 改成 $(this) ; $(this)代表的是点哪个就是哪个
+						// }else{
+						// 	$('.box').addClass('col1');
+						// };
+						
+						$('.box').toggleClass('col1'); 		// 就是上面的功能 ，判断切换方法
+						
+				});
+
+
+				// 渐入渐出效果		
+				$('#c_btn').click(function(){
+
+					// 可以带参数和效果，以及回调函数
+					$('.box').fadeToggle(1000, 'swing', function(){
+							            // alert('动画完成！');
+							        });
+				});
+
+
+				// 选项卡
+				var $btn = $('.btns input');
+				var $con = $('.cons div');
+
+				$btn.click(function(){
+					// $(this) 点哪个就是哪个,
+					// 点击的那个选项添加 current 样式，并把其他同级元素的 current 样式移除掉
+					$(this).addClass('current').siblings().removeClass('current');
+
+					// alert($(this).index());
+					
+					// 把选项卡和内容块绑定起来 ： $con.eq($(this).index())
+					// 当前点击的按钮对应的索引值加 active 样式，并把其他同级元素的 active 样式移除掉
+					$con.eq($(this).index()).addClass('active').siblings().removeClass('active');
+
+				});
+
+
+
+				// 动画选项卡
+				var $anbtn = $('.an_btn input');
+				var $slides = $('.an_slides ');
+
+				$anbtn.click(function(){
+
+					// 点击的那个选项添加 an_current 样式，并把其他同级元素的 an_current 样式移除掉
+					$(this).addClass('an_current').siblings().removeClass('an_current');
+
+					// 改变left值，切换到相对应的选项卡, 动画模式
+					$slides.stop().animate({'left':-500*$(this).index()}, 1000, 'swing');
+
+				});
+
+
+
+				// 层级菜单(链式写法)
+				
+				$('.level1').click(function(){
+
+					// next()选择div元素后面紧挨的同辈元素ul 放下来slideDon; 同时需要把其他的ul卷起来
+					// 跳出当前元素a ,返回到父级parent()元素li ，然后选择其他同级元素siblings() 下的子集children('ul')元素ul 卷起来
+					// $(this).next().slideDown().parent().siblings().children('ul').slideUp();
+					 
+					// 如果使用slideToggle() 连续点会出现往返的bug，是因为动画有延迟，所以需要在前面加个 stop()
+					$(this).next().stop().slideToggle().parent().siblings().children('ul').slideUp();
+				});
+
+
+
+				// 购物车 (偏移量的动画)
+
+				var $chart = $('.chart');
+				var $count = $('.chart em');
+				var $ch_btn = $('.add');
+				var $point = $('.point');
+
+				$ch_btn.click(function(){
+
+					// 获取 购物车 和 点击按钮的位置
+					var oPos01 = $ch_btn.offset();
+					var oPos02 = $chart.offset();
+
+					// 获取按钮 和购物车 盒子的真实尺寸					
+					var $w01 = $ch_btn.outerWidth();
+					var $h01 = $ch_btn.outerHeight();
+					var $w02 = $chart.outerWidth();
+					var $h02 = $chart.outerHeight();
+					var $w03 = $point.outerWidth();
+					var $h03 = $point.outerHeight()
+
+					// 设置红点的位置值，这个值是按钮的位置
+					$point.css({'left':oPos01.left+parseInt($w01/2)-parseInt($w03/2), 'top':oPos01.top+parseInt($h01/2)-parseInt($h03/2)});
+					$point.show();
+
+					// 动画效果
+					$point.animate({'left':oPos02.left+parseInt($w02/2)-8, 'top':oPos02.top+parseInt($h02/2)-8}, 100, function(){
+							// 回调函数，红点隐藏
+							$point.hide();
+
+							// 比 innerHTML简单 html()
+							// 读取内容
+							var iNum = $count.html();
+							// 写内容
+							$count.html(parseInt(iNum)+1);
+					});
+
+				});
+
+
+				// // 可视区的
+				// alert($(window).width());
+				// alert($(window).height());
+
+				// // 文档的
+				// alert($(document).width());
+				// alert($(document).height());
+				// 
+
+
+				// 手风琴效果
+	
+				var $sfq = $('#accordion');
+
+				// 委托事件 第一个参数 是选择器， 第二个参数 是事件， 第三个参数 是操作函数
+				$sfq.delegate('li', 'click', function(){
+					// 往左移动动画，移动到左边的距离是 点击的那个索引* span标签的21px;单独点是没问题的
+					// 但是如果点第4个。2、3是原地不动的，只有4过去
+					$(this).animate({'left':$(this).index()*21});
+
+					// 所以需要操作前面的元素
+					// prevALL 选择div元素之前所有的同辈元素， 
+					// 但是需要分别对每个同辈元素进行操作，就用到 each()方法
+					$(this).prevAll().each(function(){
+						$(this).animate({'left':$(this).index()*21})
+					})
+
+					// 往右运动，由于图片是显示的在右边的，所以点击的那个数是不动的，移动的是右边的元素
+					$(this).nextAll().each(function(){
+						// 距离是 li的长度 -  li的总数 - 点击的索引值 * 21宽度
+						$(this).animate({'left':$('#accordion').width()-($('#accordion li').length-$(this).index())*21});
+					})
+
+				});
+
+
+
+
+				// 多事件绑定
+				var i_num = 0;
+				$('.bind_btn .b_btn').bind('mouseover click', function(event){
+						$('.bind_btn .b_text').val("滑动了1次，点击了"+ (++i_num -1) + '次');
+						// 取消绑定事件
+						$(this).unbind('mouseover');
+				});
+
+
+
+				// 弹窗 --事件冒泡	
+				// 
+				$('#pop_btn').click(function(){
+					// 点击按钮，弹出 pop （包含了 pop_con 和 mask）
+					$('.pop').fadeIn();
+					// 当点击按钮弹出来，由于冒泡原理，会找父级点击事件函数，
+					// 但是最高层document有点击关闭函数， 所以又关闭了，导致弹不出来
+					// 所以当点击 按钮时 需要关闭 冒泡事件
+					return false;
+					
+				});
+				// 点击 document 窗口 关闭弹窗
+				$(document).click(function(){
+					$('.pop').fadeOut();	
+				});
+				// 当点击输入框 pop_con 的时候，产生点击事件，由于没有设点击函数，冒泡事件，会往上层找到 document 关闭事件
+				// 所以需要关闭 pop_con的点击事件，阻止冒泡事件
+				$('.pop_con').click(function(){
+					return false;
+				});
+				$('#close').click(function(){
+					$('.pop').fadeOut()
+				})
+
+
+
+
+				// 节点操作 to do list
+				// 
+				// 增加内容
+				$('.inputbtnn').click(function(){
+					// 判断文本框是不是空的，空的提示并退出来
+					if($('.inputtext').val()==''){
+						alert("请输入内容");
+						// 结束整个函数的运行，下面的就不执行了
+						return;
+					};
+
+					// 增加节点 把内容拼接起来并添加到列表
+					var $li = $('<li><span>'+$('.inputtext').val()+'</span><a href="javascript:;" class="up"> ↑ </a><a href="javascript:;" class="down"> ↓ </a><a href="javascript:;" class="del">删除</a></li>');
+					$('.list_three').append($li);
+					// 插入以后把内容框清空
+					$('.inputtext').val("");
+
+				});
+
+				// // 给a 加事件
+				// // 删除事件，但是会存在一个问题，就是新增加的不能删除，所以不用，用代理
+				// $('.del').click(function(){
+				// 	// 删除键a的父元素 li
+				// 	$(this).parent().remove();
+				// });
+				
+				// 使用代理 读取属性值，判断
+				$('.list_three').delegate('a','click',function(){
+
+						if($(this).prop('class')=='del'){
+							$(this).parent().remove();
+						};
+						if($(this).prop('class')=='up'){
+							if($(this).parent().prev().length==0){
+								alert("到顶了");
+							}else{
+								$(this).parent().insertBefore($(this).parent().prev());
+							}	
+						}
+						if(($(this).prop('class')=='down')){
+							if($(this).parent().next().length==0){
+								alert("到底了");
+								return;
+							}else{
+								$(this).parent().insertAfter($(this).parent().next());
+								return;	
+							}		
+						}
+				});
+
+
+
+				
+				// 幻灯片
+				// 
+				// 先把图片定位下，除了第一张，其他的图片都放到右边
+				var $li = $('.slide_list li');
+				$li.not(':first').css({'left':760});
+				// 自动添加小圆点
+				var $len = $li.length;
+				var $point = $('.slide_points');
+				for(var i=0;i<$len;i++){
+					var $newli = $('<li>');
+					if(i==0){
+						// 第一个小圆点的样式
+						$newli.addClass('slide_active');
+					}
+					$point.append($newli);
+				};
+				// 
+				// 小圆点功能
+				// 
+				// 定义圆点li、要点击和当前的圆点
+				var $pointli = $('.slide_points li');
+				var clickpoint = 0;
+				var nowpoint = 0;
+				// 点击圆点，图片移动
+				$pointli.click(function(){
+					// 把点击圆点的序号设置成 要点击的圆点
+					clickpoint = $(this).index();	
+					// 动画函数
+					move();
+				});
+				// 定义动画函数
+				// 
+				// 狂点按钮会有个效果的bug,就是动画没执行完，一直跳，可以加个stop()，也可以增加个属性进行开关判断
+				var ismove = false;
+				function move(){
+					// 第一张往前的时候 操作
+					if (clickpoint<0){
+						clickpoint = $len-1;
+						nowpoint = 0;
+						$pointli.eq(clickpoint).addClass('slide_active').siblings().removeClass('slide_active');
+						$li.eq(clickpoint).css({'left':-760});
+						$li.eq(clickpoint).animate({'left':0});
+						$li.eq(nowpoint).animate({'left':760}, function(){
+							ismove = false;
+						});
+						nowpoint = clickpoint;
+						return;
+					};
+					// 最后一张往后时的操作
+					if (clickpoint>$len-1){
+						clickpoint = 0;
+						nowpoint = $len-1;
+						$pointli.eq(clickpoint).addClass('slide_active').siblings().removeClass('slide_active');
+						$li.eq(clickpoint).css({'left':760});
+						$li.eq(clickpoint).animate({'left':0});
+						$li.eq(nowpoint).animate({'left':-760}, function(){
+							ismove = false;
+						});
+						nowpoint = clickpoint;
+						return;
+					}
+
+					// 当点击的大于当前的与圆点，图片往左移动，
+					if(clickpoint>nowpoint){	
+						// 先把要移动的图片放到右边
+						$li.eq(clickpoint).css({'left':760});
+						// 当前图片移除
+						$li.eq(nowpoint).animate({'left':-760});
+
+					// 点击当前的圆点时，不操作动作
+					}else if(clickpoint==nowpoint){
+						return;
+					}else{
+						// 先把要移动的图片放到左边
+						$li.eq(clickpoint).css({'left':-760});
+						$li.eq(nowpoint).animate({'left':760});
+						nowpoint = clickpoint;
+					}
+						// 把判断语句中共同拥有的拿出来
+						// 
+						// 点击图片往左移动，移入
+						$li.eq(clickpoint).animate({'left':0}, function(){
+							ismove = false;
+						});
+						// 把移入的图片设为当前图片
+						nowpoint = clickpoint;
+						// 点击的圆点添加样式，其他的圆点删除样式
+						$pointli.eq(clickpoint).addClass('slide_active').siblings().removeClass('slide_active');
+				}
+				//
+				//	方向按钮动画
+				//
+				var $list_prev = $(".slide_prev");
+				var $list_next = $('.slide_next');
+
+				// 向前的按钮，切换幻灯片	
+				$list_prev.click(function(){
+					// 由于一开始定义的是 false的，所以会执行。然会赋值为true，如果动画完不修改ismove的值，那么会一定跳出不执行，所以需要在动画结束时修改ismove为false
+					if(ismove){
+						return;
+					};
+					ismove = true;
+					clickpoint--;
+					move();
+				});
+				// 向后的按钮，切换幻灯片
+				$list_next.click(function(){
+					if(ismove){
+						return;
+					};
+					ismove = true;
+					clickpoint++;
+					move();
+				})
+				//
+				//	自动播放
+				//
+				// 定时器
+				var timer = setInterval(autoplay,3000);
+				// 定时器函数
+				function autoplay(){
+					clickpoint++;
+					move();			
+				}
+				// 父框， 鼠标移入移出，动画停止继续的效果
+				$('.slide_con').mouseenter(function(){
+					clearInterval(timer);
+				});
+				$('.slide_con').mouseleave(function(){
+					timer = setInterval(autoplay,3000);
+				})
+
+		
+
+			});
+
+	</script>
+	
+
+	<script type="text/javascript">
+		// ajax请求处理
+		// 
+		// https://sug.so.360.cn/suggest?callback=suggest_so&encodein=utf-8&encodeout=utf-8&format=json&fields=word&word=a&llbq=A5%2CB5%2CC5%2CD5
+		// 
+		// https://sug.so.360.cn/suggest?callback=suggest_so&encodein=utf-8&encodeout=utf-8&format=json&fields=word&word=a&huid=11LRKIOHIELjs3pEVMm7J5DF8nib%2BEtrC%2BNf5MdTuQx68%3D&llbq=A5%2CB5%2CC5%2CD5
+		// 
+		// https://sug.so.360.cn/suggest?&callback=jQuery11240664294083691108_1562563206109&word=a&_=1562563206111
+		$(function(){
+
+			// 绑定#ajax_test的click事件
+			$('#ajax_test').click(function(){
+				// ajax请求
+				$.ajax({
+					'url':'/jsontest',
+					'dataType':'json',
+				})
+				.done(function(data){
+					if(data.res ==1){
+						$('#message').show().html("提示信息")
+					}
+				})
+
+			})
+
+		})
+		
+	</script>
+
+	<style type="text/css">
+
+		body , ul{
+			margin:0px;
+			padding:0px;
+			list-style:none;
+
+		}
+		.center_1{
+			width: 960px;
+			height: 200px;
+			margin: 0 auto;
+			border: 1px solid gold;
+		}
+		.box{
+			width: 760px;
+			height: 100px;
+			background-color: gold;
+		}	
+		.big{
+			font-size: 30px;
+		}
+		.red{
+			color: red;
+		}
+		.col1{
+			background-color: lightgreen;
+		}
+
+
+
+		/* 菜单悬顶 */
+		.menu_top{
+			width: 960px;
+			height: 80px;
+			background-color: lightblue;
+			margin: 0 auto;
+			text-align: center;
+			list-style: 80px;
+		}
+		.menu_bac{			/* 解决悬浮让位的bug  */
+			width: 960px;
+			height: 80px;
+			margin: 0 auto;
+			display: none;
+		}
+		/* 滚动回顶部 */
+		.totop{
+
+			width: 50px;
+			height: 50px;
+			background-color: #000;
+			line-height: 50px;
+			text-align: center;
+			font-size: 40px;
+			color:#fff;
+			position: fixed;
+			right: 20px;
+			bottom: 50px;
+			border-radius: 15px;
+			display: none;
+			cursor: pointer;
+		}
+		
+
+
+
+		/* 选项卡样式 */
+		.btns input{
+			margin-top: 20px;
+			width: 100px;
+			height: 40px;
+			background-color: #ddd;
+			/*outline: none;*/
+			border: 0;
+		}
+		.btns .current{
+			background-color: gold;
+		}
+		.cons div{
+			width: 500px;
+			height: 100px;
+			background-color: gold;
+			text-align: center;
+			line-height: 100px;
+			font-size: 20px;
+			display: none;
+		}
+		.cons .active{
+			display: block;
+		}
+
+
+		
+		/* 动画选项卡 */
+		.an_btn input{
+			margin-top: 20px;
+			width:100px;
+			height: 40px;
+			background-color: #ddd;
+			/* 去掉焦点框(选中时候的) */
+			outline: none;		
+			border:0;
+		}
+		.an_btn .an_current{
+			background-color: gold;
+		}
+		.an_cons{
+			width: 500px;
+			height: 100px;
+			overflow: hidden;
+			position: relative;
+		}
+		.an_slides{
+			width:1500px;
+			height: 100px;
+			position: absolute;
+			left:0;
+			top:0;
+		}
+		.an_cons .an_slides div{
+			width: 500px;
+			height: 100px;
+			background-color: gold;
+			text-align: center;
+			line-height: 100px;
+			font-size: 20px;
+			float:left;
+
+		}
+		.an_cons .active{
+			display: block;
+		}
+		
+
+
+
+
+		/* 层级菜单 */
+		.menu{
+			width: 200px;
+			margin: 20px;
+		}
+		.menu .level1, .menu li ul a{
+			display:block;
+			width:200px;
+			height:30px;
+			line-height:30px;
+			text-decoration:none;
+			background-color:#3366cc;
+			color:#fff;
+			font-size:16px;
+			text-indent:10px;
+		}
+		.menu .level1{
+			border-bottom:1px solid #afc6f6;	
+		}
+
+		.menu li ul a{
+			font-size:14px;
+			text-indent:20px;
+			background-color:#7aa1ef;		
+		}
+		.menu li ul li{
+			border-bottom:1px solid #afc6f6;
+		}
+		
+		.menu li ul{	/* 隐藏次级菜单 */
+			display:none;	
+		}
+
+		.menu li ul.current1{ /* 显示当前菜单  */
+			display:block;
+		}
+		.menu li ul li a:hover{
+			background-color:#f6b544;
+		}
+
+		/* 购物车  */
+		.chart_con{
+			height: 550px;
+			border:1px solid gold;
+		}
+		.chart{
+			width: 150px;
+			height: 50px;
+			border: 2px solid #000;
+			text-align: center;
+			line-height: 50px;
+			float:right;
+			margin: 50px 100px 100px 0 ;
+		}
+		.chart em{
+			font-style: normal;
+			font-weight: bold;
+			color: red;
+		}
+		.add{
+			height: 50px;
+			width: 100px;
+			background-color: lightgray;
+			border:0;
+			color:#fff;
+			float: left;
+			margin-top: 300px;
+			margin-left: 200px;
+			margin-bottom: 200px;
+		}
+		.point{	/*小红点*/
+			width: 16px;
+			height: 16px;
+			background-color: red;
+			position: absolute;
+			left:0;
+			top:0;
+			display: none;
+			border-radius: 50%;
+			z-index: 999;	/* 盖住其他的元素 */
+		}
+
+		
+		/******  手风琴 *****/
+		#accordion{
+			width: 727px;		/* 622 + 21*5 = 727 */
+			height: 350px;
+			margin: 20px auto;
+			position: relative;
+			overflow: hidden;
+			border: 1px solid #ccc;
+		}
+		#accordion ul{
+			list-style:none;	
+		}
+		#accordion ul li{
+			width: 643px;		/* 图片 622 +span 21 = 643*/
+			height: 350px;
+			position: absolute;
+			background-color: #fff;
+		}
+
+		#accordion ul li span{	/* 文字左浮动 */
+			display: block;
+			width: 20px;
+			height: 350px;
+			float: left;
+			/*text-align: center;*/
+			color: #fff;
+			padding-top:5px;
+			cursor: pointer;
+		}
+		#accordion ul li img{	/* 图像右浮动 */
+			display: block;
+			float: right;
+		}
+		.bar01{left:0px;}
+		.bar02{left:643px;}
+		.bar03{left:664px;}
+		.bar04{left:685px;}
+		.bar05{left:706px;}
+		.bar01 span{background:#09E0B5;}
+		.bar02 span{background:#3D7FBB;}
+		.bar03 span{background:#5CA716;}
+		.bar04 span{background:#F28B24;}
+		.bar05 span{background:#7C0070;}
+
+		/* 多事件绑定 */
+		.bind_btn{
+			height: 200px;
+			width: 500px;
+			border:1px solid lightgreen;
+			background-color: #eee;
+			margin: 20px auto;
+		}
+		.bind_btn input{
+			display: block;
+			height: 30px;
+			width: 200px;
+			margin:50px auto;
+		}
+
+
+		/* 事件冒泡 */
+		#pop_btn{
+			margin: 50px 0 50px 50px;
+			padding: 20px;
+		}
+		.pop{
+			display: none;
+		}
+		.pop_con{
+			position: fixed;
+			width: 500px;
+			height: 300px;
+			background-color: #fff;
+			border:3px solid #000;
+			left: 50%;
+			top: 50%;
+			margin-left: -250px;
+			margin-top: -150px;
+			z-index: 9999;
+		}
+		.mask{
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			background-color: #000;
+			opacity: 0.7;
+			filter: alpha(opacity=70);
+			left:0;
+			top:0;
+			z-index: 9998;
+		}
+		.close{
+			float: right;
+			font-size: 30px;
+		}
+
+
+
+		/* to do list 节点操作*/
+		.list_do{
+			width:600px;
+			margin: 50px auto 0;
+		}
+		.inputtext{
+			width: 550px;
+			height: 30px;
+			border: 1px solid #ccc;
+			padding: 0;
+			text-indent: 10px;
+		}
+		.inputbtnn{
+			width: 40px;
+			height: 32px;
+			padding: 0;
+			bottom: 1px solid #ccc;
+		}
+		.list_three{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			margin-top: 20px;
+		}
+		.list_three li{
+			height: 40px;
+			line-height: 40px;
+			border-bottom: 1px solid #ccc;
+		}
+		.list_three li span{
+			float:left;
+		}
+		.list_three li a{
+			float: right;
+			text-decoration: none;
+			margin: 0 10px;
+		}
+
+
+		/* 幻灯片 */
+		.slide_con{
+			width: 760px;
+			height: 270px;
+			background-color: pink;
+			position: relative;
+			overflow: hidden;
+			margin: 100px auto;
+		}
+		.slide_con .slide_list{
+			position: absolute;
+			width: 760px;		
+			height: 270px;
+			/* 幻灯片就是改变left的值  */
+			left: 0px;
+			top: 0px;
+		}
+		.slide_con .slide_list li{
+			/* 所有的li重叠在一起 */
+			width:760px;
+			height: 270px;
+			position: absolute;
+			left:0;
+			top:0;
+		}
+
+		.slide_prev,.slide_next{
+			position: absolute;
+			width: 15px;
+			height: 24px;
+			background: url(../static/images/icons.png) left -450px no-repeat;
+			left:0;
+			top:0;
+		}
+
+		.slide_prev{
+			left:11px;
+			top:122px;
+			cursor: pointer;
+		}
+		.slide_next{
+			background-position: left -500px;
+			top: 122px;
+			left: 732px ;
+			cursor: pointer;
+		}
+
+		.slide_points{
+			position: absolute;
+			/* 变成行内块元素，默认没有宽度，需要设置宽度，100%是继承父属性的 */
+			width: 100%;
+			height: 11px;
+			left: 0;
+			bottom: 9px;
+			font-size:0;
+			text-align: center;
+		}
+		.slide_points li{
+			display: inline-block;
+			width: 11px;
+			height: 11px;
+			background-color: #9f9f9f;
+			margin: 0 5px;
+			/* 如果用低版本浏览器是不兼容的，还是方的 */
+			border-radius: 50%;
+			cursor:pointer;
+		}
+		.slide_points .slide_active{
+			background-color: #cecece ;
+		}
+
+
+		/* ajax请求 */
+		#ajax_test{
+			margin-top: 50px;
+			margin-left: 50px;
+		}
+		#message{
+			margin-left: 50px;
+			margin-bottom: 50px;
+			color: red;
+		}
+
+
+	</style>
+</head>
+<body>
+
+	<div class='center_1'>
+		<div class="box red">第1个div</div>
+		<div>第2个div</div>
+		<div>第3个div</div>
+		<div>第4个div</div>
+		<div>第5个div</div>
+		<div>第6个div</div>
+
+		<!-- click事件 -->
+		<input type="button" name="" value="样式切换" id="btn">
+		<!-- 动画效果 -->
+		<input type="button" name="" value="淡入淡出" id="c_btn">
+	</div>
+	
+	<!-- 菜单悬顶 -->
+	<div class="menu_top">菜单</div>	
+	<!--  解决菜单悬浮的bug -->
+	<div class="menu_bac"></div>
+
+	<!-- 滚动时回顶部 -->	
+	<div class="totop">↑</div>
+
+
+	<!-- 选项卡 -->
+	<div class="btns">
+		<input type="button" value="01" class="current">
+		<input type="button" value="02">
+		<input type="button" value="03">
+	</div>
+
+	<div class="cons">
+		<div class="active">选项卡一的内容</div>
+		<div>选项卡二的内容</div>
+		<div>选项卡三的内容</div>
+	</div>
+
+	<!-- 动画选项卡 -->
+	<div class="an_btn">
+		<input type="button" value="01" class="an_current">
+		<input type="button" value="02">
+		<input type="button" value="03">
+	</div>
+
+	<div class="an_cons">
+		<div class="an_slides">
+			<div>选项卡一的内容</div>
+			<div>选项卡二的内容</div>
+			<div>选项卡三的内容</div>
+		</div>
+	</div>
+
+
+	<!-- ul.menu>(li>a.leve11{水果}+ul>(li>a{苹果})*4)*5 -->
+	<!-- 层级菜单 -->
+	<ul class="menu">
+		<li>
+			<!-- javascript:; 就是执行一个空的js语句，什么都不做； # 是链接到页面顶部 -->
+			<a href="javascript:;" class="level1">水果</a>
+			<ul class="current1">
+				<li><a href="#">苹果</a></li>
+				<li><a href="#">梨子</a></li>
+				<li><a href="#">葡萄</a></li>
+				<li><a href="#">火龙果</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="javascript:;" class="level1">海鲜</a>
+			<ul>
+				<li><a href="#">蛏子</a></li>
+				<li><a href="#">龙虾</a></li>
+				<li><a href="#">扇贝</a></li>
+				<li><a href="#">象拔蚌</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="javascript:;" class="level1">肉类</a>
+			<ul>
+				<li><a href="#">内蒙古羊肉</a></li>
+				<li><a href="#">进口牛肉</a></li>
+				<li><a href="#">野猪肉</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="javascript:;" class="level1">蔬菜</a>
+			<ul>
+				<li><a href="#">娃娃菜</a></li>
+				<li><a href="#">西红柿</a></li>
+				<li><a href="#">西芹</a></li>
+				<li><a href="#">胡萝卜</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="javascript:;" class="level1">速冻</a>
+			<ul>
+				<li><a href="#">冰淇淋</a></li>
+				<li><a href="#">海参</a></li>
+				<li><a href="#">水饺</a></li>
+				<li><a href="#">牛肉丸</a></li>
+			</ul>
+		</li>
+	</ul>
+
+	<!-- 购物车 -->
+	<div class="chart_con">
+		<div class="chart">购物车<em>0</em></div>
+		<input type="button" name="" value="加入购物车" class="add">
+		<div class="point"></div>
+	</div>
+
+	<!-- 手风琴 -->
+	<div id="accordion">
+		<ul>
+			<li class="bar01"><span>非洲景色01</span><img src={% static "images/sfq/001.jpg" %}/></li>
+		    <li class="bar02"><span>非洲景色02</span><img src={% static "images/sfq/002.jpg" %}/></li>
+		    <li class="bar03"><span>非洲景色03</span><img src={% static "images/sfq/003.jpg" %}/></li>
+		    <li class="bar04"><span>非洲景色04</span><img src={% static "images/sfq/004.jpg" %}/></li>
+		    <li class="bar05"><span>非洲景色05</span><img src={% static "images/sfq/005.jpg" %}/></li>
+		</ul>
+	</div>
+	
+
+	<!-- 绑定事件 -->
+	<div class="bind_btn">
+		<input type="text" name="" class="b_text">
+		<input type="button" name="" value="按钮" class="b_btn">
+	</div>
+
+	<!-- 弹窗 事件冒泡 -->
+	<input type="button" name="" value="弹出" id='pop_btn'>
+	<div class="pop">
+		<div class="pop_con">
+			弹框里面文字
+			投资金额：
+			<input type="text" name="">
+			<a href="#" id='close' class='close'>X</a>
+		</div>	
+		<div class="mask"></div>
+	</div>
+
+	<!-- to do list 节点操作 -->
+	<div class="list_do">
+		<h2>To do list</h2>
+		<input type="text" name="" class="inputtext">
+		<input type="button" name="" value="确定" class="inputbtnn">
+		<ul class="list_three">
+			<li><span>学习html</span><a href="javascript:;" class="up">↑</a><a href="javascript:;" class="down">↓</a><a href="javascript:;" class="del">删除</a></li>
+			<li><span>学习css</span><a href="javascript:;" class="up">↑</a><a href="javascript:;" class="down">↓</a><a href="javascript:;" class="del">删除</a></li>
+			<li><span>学习javascript</span><a href="javascript:;" class="up">↑</a><a href="javascript:;" class="down">↓</a><a href="javascript:;" class="del">删除</a></li>
+		</ul>
+	</div>
+
+	<!-- 幻灯片操作 -->
+	<div class="slide_con">
+		<ul class="slide_list">
+			<li><a href="#"><img src={% static "images/slide.jpg"  %} alt="幻灯片"></a></li>
+			<li><a href="#"><img src={% static "images/slide02.jpg"  %} alt="幻灯片"></a></li>
+			<li><a href="#"><img src={% static "images/slide03.jpg"  %} alt="幻灯片"></a></li>
+			<li><a href="#"><img src={% static "images/slide04.jpg"  %} alt="幻灯片"></a></li>
+		</ul>
+
+		<div class="slide_prev"></div>
+		<div class="slide_next"></div>
+
+		<ul class="slide_points">
+			<!-- 点是根据图片的数量创建的 -->
+	<!-- 		<li class="slide_active"></li>
+			<li></li>
+			<li></li>
+			<li></li> -->
+		</ul>
+	</div>
+
+
+	<!-- ajax请求 -->
+	<input type="button" name="" value="ajax请求" id="ajax_test">
+	<div id="message"></div>
+</body>
+</html>
