@@ -4,8 +4,9 @@
 	<meta charset="UTF-8">
 	<title>jQuery测试</title>
 	<script type="text/javascript"  src={% static "js/jquery-1.12.4.min.js" %} ></script>
-	<!-- 滚轮js，基于jquery库的 -->
-	<script type="text/javascript"  src={% static "js/jquery.mousewheel.js" %} ></script>
+	<!-- 滚轮js，基于jquery库的,  -->
+	<!-- <script type="text/javascript"  src={% static "js/jquery.mousewheel.js" %} ></script> -->
+
 	<script type="text/javascript">
 
 			// ready的写法
@@ -480,6 +481,26 @@
 		
 	</script>
 
+	<!-- jQuery UI -->
+	<script type="text/javascript" src={% static "js/jquery-ui.min.js" %}></script>script>
+	<script type="text/javascript">
+		$(function(){
+
+			$('.ui_content').draggable({
+				// 限制范围， 只能在父级拖动
+				containment:'parent',
+				// 设置效果，ev是对象，ui是偏移值等等其他效果
+				drag:function(ev,ui){
+					// 拖拽的值
+					$('.slide_count').val(parseInt(ui.position.left));
+
+					$('.slide_count2').val($('#draggable').height()-$('.ui_content').height()-parseInt(ui.position.top));
+
+				}
+			});
+
+		})
+	</script>
 	<style type="text/css">
 
 		body , ul{
@@ -921,6 +942,28 @@
 			color: red;
 		}
 
+		/* 拖拽 */
+		#draggable{
+			width: 800px;
+			height: 500px;
+			border: 1px solid gold;	
+			margin: 10px auto;
+
+		}
+		.ui_content{
+			width: 50px;
+			height: 50px;
+			background-color: green;
+		}
+		.ui_content p{
+			margin: 0px;
+			padding: 0px;
+		}
+		.slide_dr{
+			height: 20px;
+			width: 500px;
+			margin: 20px auto;
+		}
 
 	</style>
 </head>
@@ -1102,5 +1145,18 @@
 	<!-- ajax请求 -->
 	<input type="button" name="" value="ajax请求" id="ajax_test">
 	<div id="message"></div>
+
+	<!--  jquery.ui 拖拽 -->
+	<div class="slide_dr">
+		X 轴:<input type="text" class="slide_count">
+		Y 轴:<input type="text" class="slide_count2">
+	</div>
+	<div id="draggable">
+		<div class='ui_content' >
+	  		<p>拖拽</p>
+	  	</div>	
+	</div>
+
+
 </body>
 </html>
