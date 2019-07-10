@@ -92,6 +92,11 @@ def jsontest(request):
 	''' ajax请求处理 ---返回json数据 '''
 	return JsonResponse({'res':1})
 
+# /bootstrap
+def bootstrap(request):
+	''' bootstrap的实例 '''
+	return render(request, "booktest/bootstrap.html")
+
 
 # 由于导入了 render 包，模板文件就不用像index那么去写。 直接调用
 def welcome(request):

@@ -39,4 +39,5 @@ urlpatterns = [
 	path('rem', views.rem, name="rem"),						# 移动首页
 	path('jquerytest', views.jquerytest),					# jquery 测试
 	path('jsontest', views.jsontest),						# ajax请求处理
+	path('bootstrap', views.bootstrap),						# bootstrap 测试
 ]	
